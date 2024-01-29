@@ -19,12 +19,9 @@ int main()
     Texture tex = LoadTextureFromImage(img);
 
     FastNoiseLite base;
-    base.SetFractalOctaves(3);
+    base.SetFractalOctaves(10);
     base.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2S);
     base.SetFractalType(FastNoiseLite::FractalType_FBm);
-    //FastNoiseLite cellular;
-    //cellular.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
-    //cellular.SetFractalOctaves(3);
 
 
     // Main game loop
@@ -41,29 +38,32 @@ int main()
 
                 float islandInfluence = (2 - (abs(posX) + abs(posY))) / 2;
                 islandInfluence *= 255;
-                float displacement = 0;
-                float c1 = ((base.GetNoise((float)x, (float)y, displacement * 50) + 1) / 2) * 255;
+                float displacement = 100;
+                float c1 = ((base.GetNoise((float)x, (float)y, 0.0f) + 1) / 2) * 255;
 
                 auto avg = (c1 + islandInfluence) / 2;
 
-                if (avg < 50)
+                if (avg < 200)
                     pixels[y * imgWidth + x] = (Color){0,0,139,255}; // Dark Blue
-                else if (avg < 100)
+                else if (avg < 210)
                     pixels[y * imgWidth + x] = (Color){255,255,153,255}; // Yellow
-                else if (avg < 150)
-                    pixels[y * imgWidth + x] = (Color){0,255,0,255}; // Green
-                else if (avg < 200)
+                else if (avg < 220)
+                    pixels[y * imgWidth + x] = (Color){0,139,0,255}; // Green
+                else if (avg < 230)
                     pixels[y * imgWidth + x] = (Color){165,42,0,255}; // Brown
                 else
                     pixels[y * imgWidth + x] = (Color){255,255,255,255}; // White
 
 
+                    /*
                 pixels[y * imgWidth + x] = (Color){
                     (uint8_t)avg,
                     (uint8_t)avg,
                     (uint8_t)avg,
                     255
                 };
+                */
+
             }
         }
         UpdateTexture(tex, pixels);
