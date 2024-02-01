@@ -19,7 +19,7 @@ int main()
     Texture tex = LoadTextureFromImage(img);
 
     FastNoiseLite base;
-    base.SetFractalOctaves(10);
+    base.SetFractalOctaves(5);
     base.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2S);
     base.SetFractalType(FastNoiseLite::FractalType_FBm);
 
@@ -43,12 +43,14 @@ int main()
 
                 auto avg = (c1 + islandInfluence) / 2;
 
-                if (avg < 200)
+                if (avg < 190)
                     pixels[y * imgWidth + x] = (Color){0,0,139,255}; // Dark Blue
-                else if (avg < 210)
+                else if (avg < 200)
                     pixels[y * imgWidth + x] = (Color){255,255,153,255}; // Yellow
-                else if (avg < 220)
+                else if (avg < 210)
                     pixels[y * imgWidth + x] = (Color){0,139,0,255}; // Green
+                else if (avg < 220)
+                    pixels[y * imgWidth + x] = (Color){0,100,0,255}; // Dark Green
                 else if (avg < 230)
                     pixels[y * imgWidth + x] = (Color){165,42,0,255}; // Brown
                 else
